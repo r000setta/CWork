@@ -156,6 +156,7 @@
     <ClInclude Include="List.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="print.h" />
+    <ClInclude Include="Test.h" />
     <ClInclude Include="User.h" />
   </ItemGroup>
   <ItemGroup>
