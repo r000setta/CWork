@@ -5,12 +5,15 @@
 #include<stdlib.h>
 #include "GLOBAL.h"
 
+typedef struct Info {
+	char ID[MAX];
+	int index;
+	bool available;
+}*pInfo, Info;
 
 typedef struct BookTotal {
 
 }BookTotal, *pBookTotal;
-
-
 //图书信息
 typedef struct Book {
 	char ID[MAX];	//编号
@@ -22,9 +25,9 @@ typedef struct Book {
 	char date[MAX];	//出版日期
 	TYPE type;   //图书分类
 	char publisher[MAX];  //出版商
-	int total;
+	int total;  //总共借出的次数
+	Info info[MAXLENGTH];  //维护每一本图书借给了谁
 }Book, *pBook;
-
 
 //图书链表
 typedef struct ListNode {
@@ -50,6 +53,9 @@ void createBook(pBook book, char ID[], char name[], char author[], int count, do
 	book->price = price;
 	book->left = count;
 	book->total = 0;
+	for (int i = 0; i < MAXLENGTH; i++) {
+		book->info[i].available=true;
+	}
 }
 /*
 *@method: 打印图书函数
@@ -58,6 +64,7 @@ void createBook(pBook book, char ID[], char name[], char author[], int count, do
 *@others:
 */
 void printBook(pBook book) {
+	int t = book->count - book->left;
 	printf("-------------------------------------------\n");
 	printf("编号:%8s\n", book->ID);
 	printf("书名:%8s\n", book->name);
@@ -66,6 +73,12 @@ void printBook(pBook book) {
 	printf("出版商:%8s\n", book->publisher);
 	printf("总量:%8d\n", book->count);
 	printf("库存:%8d\n", book->left);
+	printf("该书已借出%d次\n", book->total);
+	for (int i = 0; i <t; i++) {
+		if (book->info[i].available==false) {
+			printf("第%d本书借给了ID为%s的同学\n", i + 1, book->info[i].ID);
+		}
+	}
 	if (book->left > 0) {
 		printf("可借阅\n");
 	}
@@ -147,21 +160,20 @@ void Traverse(PNode List) {
 }
 /*
 *@method: 插入图书
-*@param: List:带插入的链表;pos:带插入的位置;book:待插入的图书
+*@param: List:带插入的链表;
 *@return:void
-*@others:
+*@others: 修改为尾插
 */
-void Insert(PNode List, int pos) {
+void Insert(PNode List) {
 	char ID[MAX], publisher[MAX], author[MAX], name[MAX], date[MAX];
 	int count;
 	double price;
 	TYPE type;
 	int position = 0;
 	PNode p = List;
-	while (p != NULL && position < pos - 1)
+	while (p != NULL)
 	{
 		p = p->next;
-		position++;
 	}
 	PNode tmp = (PNode)malloc(sizeof(PNode));
 	if (tmp == NULL) {
@@ -193,16 +205,14 @@ void Insert(PNode List, int pos) {
 }
 /*
 *@method: 删除指定位置的图书
-*@param: List:待删除的图书链表;pos 删除的位置
+*@param: List:待删除的图书链表;ID: 待删除的图书ID编号
 *@return: Void
-*@others:
+*@others:  修改为根据ID删除图书
 */
-void Delete(PNode List, int pos) {
-	int position = 0;
+void Delete(PNode List,char* ID) {
 	PNode p = List;
-	while (p != NULL && position < pos - 1) {
+	while (p != NULL && strcmp(p->book->ID,ID)!=0) {
 		p = p->next;
-		position++;
 	}
 	//待删除节点
 	PNode tmp = p->next;
@@ -222,7 +232,6 @@ void Clear(PNode List) {
 	while (p != NULL) {
 		tmp = p->next;
 		free(p);
-		//printf("Free\n");
 		p = tmp;
 	}
 	printf("图书清理完成\n");

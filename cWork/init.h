@@ -99,17 +99,14 @@ void loginInitTeacher(char* ID,PNode List) {
 			break;
 		}
 		case 2: {  //添加图书
-			int position;
-			printf("请输入待插入的位置\n");
-			scanf("%d", &position);
-			Insert(List, position);
+			Insert(List);
 			break;
 		}
 		case 3: {	//删除图书
-			int position;
-			printf("请输入待删除的位置\n");
-			scanf("%d", &position);
-			Delete(List, position);
+			char ID[MAX];
+			printf("请输入待删除的ID\n");
+			scanf("%s", ID);
+			Delete(List, ID);
 			break;
 		}	
 		case 4: {	//查看学生信息

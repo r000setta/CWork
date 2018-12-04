@@ -147,22 +147,39 @@ void Borrow(int index, pBook book) {
 	Person person = persons[index];
 	person.borrow[person.count] = book;
 	book->left--;
+	book->total++;
+	int t = book->count - book->left;
+	for (int i = 0; i <t; i++) {
+		if (book->info[i].available==true)
+		{
+			strcpy(book->info[i].ID, person.ID);
+			book->info[i].available = false;
+		}
+	}
 	person.count++;
 	printf("借阅成功,书本剩余%d\n", book->left);
 }
 
 
-/*
+/*1
 *@method: 还书
 *@param:
 *@return:
 *@others:
 */
-bool returnBook(Person person, char ID[]) {
+bool returnBook(Person person, char ID[MAX]) {
 	for (int i = 0; i < person.count; i++) {
 		pBook book = person.borrow[i];
+		int t = book->count - book->left;
 		if (book->ID == ID)
 		{
+			for (int i = 0; i <= t; i++) {
+				if (strcmp(book->info[i].ID,ID)==0)
+				{
+					book->info[i].available = true;
+					strcpy(book->info[i].ID, "\0");
+				}
+			}
 			book->left++;
 			person.count--;
 			person.borrow[i] = NULL;
