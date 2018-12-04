@@ -95,18 +95,21 @@ void loginInitTeacher(char* ID,PNode List) {
 		switch (mode)
 		{
 		case 1: {  //查询图书
-			char ID[MAX];
-			printf("请输入书的编号:");
-			scanf("%s", ID);
-			pBook book = SearchBook(List, ID);
-			printBook(book);
+			Traverse(List);
 			break;
 		}
 		case 2: {  //添加图书
-
+			int position;
+			printf("请输入待插入的位置\n");
+			scanf("%d", &position);
+			Insert(List, position);
 			break;
 		}
 		case 3: {	//删除图书
+			int position;
+			printf("请输入待删除的位置\n");
+			scanf("%d", &position);
+			Delete(List, position);
 			break;
 		}	
 		case 4: {	//查看学生信息
@@ -240,6 +243,7 @@ void Init() {
 					break;
 			case 3: {	//登录系统（教师）
 				char ID[MAX];
+				printf("请输入你的教师号\n");
 				scanf("%s", ID);
 				if (Login(ID,"tea"))
 				{

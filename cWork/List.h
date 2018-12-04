@@ -7,8 +7,8 @@
 
 
 typedef struct BookTotal {
-	
-}BookTotal,*pBookTotal;
+
+}BookTotal, *pBookTotal;
 
 
 //图书信息
@@ -23,7 +23,7 @@ typedef struct Book {
 	TYPE type;   //图书分类
 	char publisher[MAX];  //出版商
 	int total;
-}Book,*pBook;
+}Book, *pBook;
 
 
 //图书链表
@@ -35,12 +35,12 @@ typedef struct ListNode {
 
 /*
 *@method: 添加图书函数
-*@param: 
+*@param:
 *@return: 无
 *@others:
 */
-void createBook(pBook book,char ID[],char name[],char author[],int count,double price,
-	char date[],TYPE type,char publisher[]) {
+void createBook(pBook book, char ID[], char name[], char author[], int count, double price,
+	char date[], TYPE type, char publisher[]) {
 	strcpy(book->name, name);
 	strcpy(book->ID, ID);
 	strcpy(book->author, author);
@@ -66,7 +66,7 @@ void printBook(pBook book) {
 	printf("出版商:%8s\n", book->publisher);
 	printf("总量:%8d\n", book->count);
 	printf("库存:%8d\n", book->left);
-	if (book->left>0) {
+	if (book->left > 0) {
 		printf("可借阅\n");
 	}
 	else {
@@ -86,7 +86,7 @@ PNode Create() {
 	double price;
 	TYPE type;
 	printf("请输入初始的书本:");
-	scanf("%d",&len);
+	scanf("%d", &len);
 	PNode head = (PNode)malloc(sizeof(Node));
 	if (head == NULL) {
 		printf("分配失败!\n");
@@ -94,15 +94,15 @@ PNode Create() {
 	}
 	PNode tail = head;
 	tail->next = NULL;
-	for (int i = 1; i <=len; i++) {
+	for (int i = 1; i <= len; i++) {
 		PNode pNew = (PNode)malloc(sizeof(Node));
-		if (pNew==NULL)
+		if (pNew == NULL)
 		{
 			printf("分配失败!\n");
 			exit(-1);
 		}
 		pNew->book = (pBook)malloc(sizeof(pBook)); //创建书本
-		printf("请输入第%d本书的书名",i);
+		printf("请输入第%d本书的书名", i);
 		scanf("%s", name);
 		printf("请输入第%d本书的作者", i);
 		scanf("%s", author);
@@ -119,7 +119,7 @@ PNode Create() {
 		printf("请输入第%d本书类型", i);
 		scanf("%d", &type);
 		createBook(pNew->book, ID, name, author, count, price, date, type, publisher);
-		printf("第%d本书添加成功!\n",i);
+		printf("第%d本书添加成功!\n", i);
 		tail->next = pNew;
 		pNew->next = NULL;
 		tail = pNew;
@@ -130,14 +130,14 @@ PNode Create() {
 *@method: 遍历图书链表
 *@param: List：待遍历的链表
 *@return: 无
-*@others: 
+*@others:
 */
 void Traverse(PNode List) {
 	PNode p = List->next;
 	int i = 1;
-	if (p == NULL) 
+	if (p == NULL)
 		printf("当前目录为空\n");
-	while (p!=NULL)
+	while (p != NULL)
 	{
 		printf(">>>>>>>>>>>>>第%d本书<<<<<<<<<<<<\n", i);
 		printBook(p->book);
@@ -158,7 +158,7 @@ void Insert(PNode List, int pos) {
 	TYPE type;
 	int position = 0;
 	PNode p = List;
-	while (p!=NULL && position<pos-1)
+	while (p != NULL && position < pos - 1)
 	{
 		p = p->next;
 		position++;
@@ -218,7 +218,7 @@ void Delete(PNode List, int pos) {
 *@others:
 */
 void Clear(PNode List) {
-	PNode p=List->next, tmp;
+	PNode p = List->next, tmp;
 	while (p != NULL) {
 		tmp = p->next;
 		free(p);
@@ -238,7 +238,7 @@ pBook SearchBook(PNode List, char* ID) {
 	while (p != NULL && strcmp(p->book->ID, ID) != 0) {
 		p = p->next;
 	}
-	if (p!=NULL)
+	if (p != NULL)
 	{
 		return p->book;
 	}

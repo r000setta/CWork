@@ -3,7 +3,7 @@
 
 
 #define MAX 20			//最长名字字段
-#define MAXLENGTH 999	//最多存放图书
+#define MAXLENGTH 10	//最多存放图书
 #define MAXPERSON 20	//最多学生数量
 #define BRORROW 5		//学生最多借阅图书本数
 #define TIME 30			//单次借阅最长事件

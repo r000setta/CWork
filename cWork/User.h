@@ -22,7 +22,7 @@ typedef struct Person {
 	int count;		//学生已借书目
 	pBook borrow[BRORROW];  //学生借阅书本集合
 	int overTime;	//超时书本
-}Person,*pPerson;
+}Person, *pPerson;
 
 
 int length = 5;
@@ -67,7 +67,7 @@ void printPerson(int index) {
 	printf("ID:%3s\n", persons[index].ID);
 	printf("姓名:%3s\n", persons[index].name);
 	printf("已借阅书本:%3d\n", persons[index].count);
-	printf("可借阅书本:%3d\n",BRORROW-persons[index].count);
+	printf("可借阅书本:%3d\n", BRORROW - persons[index].count);
 	printf("借阅超时书本:%3d\n", persons[index].overTime);
 	printf("------------------------------\n");
 }
@@ -79,8 +79,8 @@ void printPerson(int index) {
 *@return:
 *@others:
 */
-bool Login(char* ID,const char* type) {
-	if (strcmp(type,"stu")==0)
+bool Login(char* ID, const char* type) {
+	if (strcmp(type, "stu") == 0)
 	{
 		for (int i = 0; i < length; i++) {
 			if (strcmp(persons[i].ID, ID) == 0) {
@@ -111,8 +111,8 @@ bool Login(char* ID,const char* type) {
 *@return:
 *@others:
 */
-int getIndex(char* ID,const char type[]) {
-	if (strcmp(type,"stu")==0)
+int getIndex(char* ID, const char type[]) {
+	if (strcmp(type, "stu") == 0)
 	{
 		for (int i = 0; i < length; i++) {
 			if (strcmp(persons[i].ID, ID) == 0) {
@@ -148,7 +148,7 @@ void Borrow(int index, pBook book) {
 	person.borrow[person.count] = book;
 	book->left--;
 	person.count++;
-	printf("借阅成功,书本剩余%d\n",book->left);
+	printf("借阅成功,书本剩余%d\n", book->left);
 }
 
 
@@ -158,10 +158,10 @@ void Borrow(int index, pBook book) {
 *@return:
 *@others:
 */
-bool returnBook(Person person,char ID[]) {
+bool returnBook(Person person, char ID[]) {
 	for (int i = 0; i < person.count; i++) {
 		pBook book = person.borrow[i];
-		if (book->ID==ID)
+		if (book->ID == ID)
 		{
 			book->left++;
 			person.count--;
