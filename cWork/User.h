@@ -106,7 +106,7 @@ bool Login(char* ID, const char* type) {
 
 
 /*
-*@method: 获取具体用户
+*@method: 获取用户的index
 *@param:
 *@return:
 *@others:
@@ -139,7 +139,7 @@ int getIndex(char* ID, const char type[]) {
 
 /*
 *@method: 借书
-*@param:
+*@param: index:学生序号(不是学号);book:待借书本
 *@return:
 *@others:
 */
@@ -161,10 +161,10 @@ void Borrow(int index, pBook book) {
 }
 
 
-/*1
+/*
 *@method: 还书
-*@param:
-*@return:
+*@param:person: 还书的学生;ID:待还书的ID
+*@return: 还书是否成功
 *@others:
 */
 bool returnBook(Person person, char ID[MAX]) {
