@@ -42,7 +42,7 @@ typedef struct ListNode {
 *@return: 无
 *@others:
 */
-void createBook(pBook book, char ID[], char name[], char author[], int count, double price,
+void createBook(pBook book, char ID[MAX], char name[MAX], char author[MAX], int count, double price,
 	char date[], TYPE type, char publisher[]) {
 	strcpy(book->name, name);
 	strcpy(book->ID, ID);
@@ -100,7 +100,7 @@ PNode Create() {
 	TYPE type;
 	printf("请输入初始的书本:");
 	scanf("%d", &len);
-	PNode head = (PNode)malloc(sizeof(Node));
+	PNode head = (PNode)calloc(1,sizeof(Node));
 	if (head == NULL) {
 		printf("分配失败!\n");
 		exit(-1);
@@ -108,13 +108,13 @@ PNode Create() {
 	PNode tail = head;
 	tail->next = NULL;
 	for (int i = 1; i <= len; i++) {
-		PNode pNew = (PNode)malloc(sizeof(Node));
+		PNode pNew = (PNode)calloc(1,sizeof(Node));
 		if (pNew == NULL)
 		{
 			printf("分配失败!\n");
 			exit(-1);
 		}
-		pNew->book = (pBook)malloc(sizeof(pBook)); //创建书本
+		pNew->book = (pBook)calloc(1,sizeof(Book)); //创建书本
 		printf("请输入第%d本书的书名", i);
 		scanf("%s", name);
 		printf("请输入第%d本书的作者", i);
@@ -181,7 +181,7 @@ void Insert(PNode List) {
 		exit(-1);
 	}
 	//插入节点
-	tmp->book = (pBook)malloc(sizeof(pBook));
+	tmp->book = (pBook)malloc(sizeof(Book));
 	printf("请输入书名");
 	scanf("%s", name);
 	printf("请输入书的作者");
@@ -198,7 +198,7 @@ void Insert(PNode List) {
 	scanf("%lf", &price);
 	printf("请输入书类型");
 	scanf("%d", &type);
-	createBook(tmp->book, ID, name, author, count, price, date, type, publisher);;
+	createBook(tmp->book, ID, name, author, count, price, date, type, publisher);
 	tmp->next = p->next;
 	p->next = tmp;
 	printf("图书添加成功!\n");

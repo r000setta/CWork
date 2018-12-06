@@ -47,11 +47,10 @@ Teacher teachers[1] = {
 *@return:
 *@others:
 */
-void printTeacher(int index) {
-	Teacher teacher = teachers[index];
+void printTeacher(Teacher* teacher) {
 	printf("-----------------------------\n");
-	printf("ID:%3s\n", teacher.ID);
-	printf("姓名:%3s\n", teacher.name);
+	printf("ID:%3s\n", teacher->ID);
+	printf("姓名:%3s\n", teacher->name);
 	printf("-----------------------------\n");
 }
 
@@ -62,13 +61,13 @@ void printTeacher(int index) {
 *@return:
 *@others:
 */
-void printPerson(int index) {
+void printPerson(pPerson person) {
 	printf("-----------------------------\n");
-	printf("ID:%3s\n", persons[index].ID);
-	printf("姓名:%3s\n", persons[index].name);
-	printf("已借阅书本:%3d\n", persons[index].count);
-	printf("可借阅书本:%3d\n", BRORROW - persons[index].count);
-	printf("借阅超时书本:%3d\n", persons[index].overTime);
+	printf("ID:%3s\n", person->ID);
+	printf("姓名:%3s\n", person->name);
+	printf("已借阅书本:%3d\n", person->count);
+	printf("可借阅书本:%3d\n", BRORROW - person->count);
+	printf("借阅超时书本:%3d\n", person->overTime);
 	printf("------------------------------\n");
 }
 
@@ -143,20 +142,19 @@ int getIndex(char* ID, const char type[]) {
 *@return:
 *@others:
 */
-void Borrow(int index, pBook book) {
-	Person person = persons[index];
-	person.borrow[person.count] = book;
+void Borrow(pPerson person, pBook book) {
+	person->borrow[person->count] = book;
 	book->left--;
 	book->total++;
 	int t = book->count - book->left;
 	for (int i = 0; i <t; i++) {
 		if (book->info[i].available==true)
 		{
-			strcpy(book->info[i].ID, person.ID);
+			strcpy(book->info[i].ID, person->ID);
 			book->info[i].available = false;
 		}
 	}
-	person.count++;
+	person->count++;
 	printf("借阅成功,书本剩余%d\n", book->left);
 }
 
@@ -167,11 +165,11 @@ void Borrow(int index, pBook book) {
 *@return: 还书是否成功
 *@others:
 */
-bool returnBook(Person person, char ID[MAX]) {
-	for (int i = 0; i < person.count; i++) {
-		pBook book = person.borrow[i];
+bool returnBook(pPerson person, char ID[MAX]) {
+	for (int i = 0; i <= person->count; i++) {
+		pBook book = person->borrow[i];
 		int t = book->count - book->left;
-		if (book->ID == ID)
+		if (strcmp(book->ID , ID)==0)
 		{
 			for (int i = 0; i <= t; i++) {
 				if (strcmp(book->info[i].ID,ID)==0)
@@ -181,8 +179,8 @@ bool returnBook(Person person, char ID[MAX]) {
 				}
 			}
 			book->left++;
-			person.count--;
-			person.borrow[i] = NULL;
+			person->count--;
+			person->borrow[i] = NULL;
 			return true;
 		}
 	}
